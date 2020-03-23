@@ -1,0 +1,57 @@
+<?php
+	if(!isset($_SESSION)) 
+    	session_start(); 
+	require 'connection.php';
+	
+	$grupid = mysqli_real_escape_string($connection, $_POST['grupid']);
+	# GET THE CURRENT GRUP ID
+	if (isset($grupid)) {
+		$_SESSION['grupid'] = $grupid;
+	}
+	# GET THE CURRENT GRUP NAMA
+	$session_grupid = $_SESSION['grupid'];
+	$G_SQL = "SELECT * FROM grup WHERE grup_id='$session_grupid';";
+	$G_RES = mysqli_query($connection, $G_SQL);
+	$G_FET = mysqli_fetch_assoc($G_RES);
+	$_SESSION['grupnama'] = $G_FET['grup_nama'];	
+
+	$SQL = "SELECT * FROM absent WHERE absent_grup='$grupid';";
+	$RES = mysqli_query($connection, $SQL);
+	$NROW = mysqli_num_rows($RES);
+	$result = array();
+	$result['absent'] = array();
+	if ($NROW > 0) {
+		$i = 0;
+		while ($SELECTED = mysqli_fetch_assoc($RES)) {
+			$uid = $SELECTED['tugas_author_id'];
+
+			$akunSQL = "SELECT * FROM akun WHERE user_id='$uid';";
+			$akunRES = mysqli_query($connection, $akunSQL);
+			$akunFET = mysqli_fetch_assoc($akunRES);
+			$avatar = "https://res.cloudinary.com/dizwvnwu0/image/upload/v1526631738/icon/reading_ebook-512.png";
+			if ($akunFET['user_avatar'] != null) {
+				$avatar = "https://res.cloudinary.com/dizwvnwu0/image/upload/c_lfill,h_500,w_500/v1525499092/tugaskita/profile/".$akunFET['user_avatar'].".png";
+			}
+
+			$endResult['grupid'] = $SELECTED['tugas_posisi'];
+			$endResult['tugasauthorpic'] = $avatar;
+			$endResult['tugascerita'] = $SELECTED['tugas_cerita'];
+			// Add each tugas
+			array_push($result['tugas'], $endResult);
+		}
+		$result['success'] = "1";
+        $result['message'] = "success";
+        
+        $_SESSION['tugas'] = json_encode($result);
+		header("Location: ../tugas");
+		mysqli_close($connection);
+		exit();
+	} else {
+		$result['success'] = "0";
+        $result['message'] = "This Group don't have tugas yet...";
+        $_SESSION['tugas'] = json_encode($result);
+        header("Location: ../tugas");
+		mysqli_close($connection);
+		exit();
+	}
+	
