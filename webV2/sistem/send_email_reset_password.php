@@ -14,20 +14,20 @@ $mail = new PHPMailer(true);                              // Passing `true` enab
 try {
     //Server settings
     //$mail->SMTPDebug = 10;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'mail.sibercenter.com';                       // Specify main and backup SMTP servers
+    $mail->isSMTP();                                      // Set mailer to use SMTP                                   
+    $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'tugaskitaindonesia@sibercenter.com';         // SMTP username
-    $mail->Password = '#indrapura32';           // SMTP password
-    $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 465;                                    // TCP port to connect to
+    $mail->Username = 'tugaskita.com@gmail.com';         // SMTP username
+    $mail->Password = 'tugasandaprioritaskami';           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;                                    // TCP port to connect to
     //Recipients
-    $mail->setFrom('tugaskitaindonesia@sibercenter.com', 'TugasKita');
+    $mail->setFrom('tugaskita.com@gmail.com', 'TugasKita.id');
     $mail->addAddress($email);     // Add a recipient
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Reset Password';
-    $mail->Body    = '<a href="https://sibercenter.com/tugaskita/web/change-password.php?email='.$email.'">Change Password Click This!</a>';
+    $mail->Body    = '<a href="http://tugaskita.epizy.com/tugaskita/web/change-password.php?email='.$email.'">Change Password Click This!</a>';
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();

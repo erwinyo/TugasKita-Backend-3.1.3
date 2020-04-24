@@ -10,7 +10,7 @@ $year = $info['year'];
 $hour = $info['hours'];
 $min = $info['minutes'];
 $sec = $info['seconds'];
-$email = mysqli_real_escape_string($connection, $_POST['email']);
+$email = mysqli_real_escape_string($connection, $_GET['email']);
 if (isset($_POST['namalengkap'])) {
   $namalengkap = mysqli_real_escape_string($connection, $_POST['namalengkap']);
 } else {
@@ -27,7 +27,7 @@ require 'vendor/autoload.php';
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
     //Server settings
-    //$mail->SMTPDebug = 10;                                 // Enable verbose debug output
+    // $mail->SMTPDebug = 10;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP                                   
     $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -37,7 +37,7 @@ try {
     $mail->Port = 587;                                    // TCP port to connect to
 
     //Recipients
-    $mail->setFrom('tugaskita.com@gmail.com', 'TugasKita.id');
+    $mail->setFrom('tugaskitaindonesia@mailjet.com', 'TugasKita.id');
     $mail->addAddress($email);     // Add a recipient
     // $mail->addAddress('fotografi.erwinyonata@gmail.com');                         // Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');

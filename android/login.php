@@ -52,14 +52,14 @@
                 exit();
             } else {
                 $result['success'] = "0";
-                $result['message'] = "error";
+                $result['message'] = "error password has been changed";
                 echo json_encode($result);
                 mysqli_close($connection);
                 exit();
             }
         } else {
             $result['success'] = "0";
-            $result['message'] = "error";
+            $result['message'] = "error not founded account";
             echo json_encode($result);
             mysqli_close($connection);
             exit();
